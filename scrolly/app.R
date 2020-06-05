@@ -641,7 +641,7 @@ server <- function(input, output, session) {
                 "
         )),
 
-        h3(HTML("The largest move this year was to New Jersey, where transplants benefit from average real estate prices per sqft. that are, on average, 1/10th that of home."
+        h3(HTML("The largest move this year was to New Jersey, where transplants benefit from real estate prices per sqft. that are, on average, 1/10th that of home."
         ))
 
 
