@@ -25,9 +25,9 @@ in the reporting, e.g.:
 # Scrolly telling
 
 The `scrolly` subdirectory has a shiny application displaying the the
-piece of scrolly telling. Thhe functionality to detect scroll by the
-user and update the map based on scroll was taken from a John Coene
-blogpost on scrollytelling in R. The repo with tthat blogpost and the
+piece of scrolly telling. The functionality to detect scroll by the user
+and update the map based on scroll was taken from a John Coene blogpost
+on scrollytelling in R. The repo with tthat blogpost and the
 dependencies for this to be reproducible are found here:
 
 <https://github.com/JohnCoene/scrollytell>
