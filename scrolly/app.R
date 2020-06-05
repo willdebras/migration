@@ -277,42 +277,48 @@ ui <- fluidPage(
       )
     ),
 
-    longdiv(
-      h1("Recent Migration Patterns in the U.S.", class = "title"),
-      br(),
-      br(),
-      h1(
-        class = "subtitle",
-        "Each ", tags$i(class = "fas fa-slash sg"), "represents a flow in migration from state to state and the width represents the level of flow."
-      ),
-      br(),
-      p(
-        style = "text-align:center;",
-        "Using data from the U.S. Census", 
-        tags$a(
-          class = "sg",
-          tags$i(class = "fas fa-external-link-alt"),
-          target = "_blank",
-          href = "https://www.census.gov/data/tables/time-series/demo/geographic-mobility/state-to-state-migration.html"
-        )
-      ),
-      br(),
-      br(),
-      br(),
-      p(
-        style = "text-align:center;",
-        tags$i(class = "fas fa-chevron-down fa-3x")
-      ),
-      br(),
-      br()
-
+    # longdiv(
+    #   h1("Recent Migration Patterns in the U.S.", class = "title"),
+    #   br(),
+    #   br(),
+    #   h1(
+    #     class = "subtitle",
+    #     "Each ", tags$i(class = "fas fa-slash sg"), "represents a flow in migration from state to state and the width represents the level of flow."
+    #   ),
+    #   br(),
+    #   p(
+    #     style = "text-align:center;",
+    #     "Using data from the U.S. Census", 
+    #     tags$a(
+    #       class = "sg",
+    #       tags$i(class = "fas fa-external-link-alt"),
+    #       target = "_blank",
+    #       href = "https://www.census.gov/data/tables/time-series/demo/geographic-mobility/state-to-state-migration.html"
+    #     )
+    #   ),
+    #   br(),
+    #   br(),
+    #   br(),
+    #   p(
+    #     style = "text-align:center;",
+    #     tags$i(class = "fas fa-chevron-down fa-3x")
+    #   ),
+    #   br(),
+    #   br()
+    # 
+    # ),
+    
+    longdiv(style = "width:100%;",
+            id = "top",
+            uiOutput("top")
+      
     ),
     
     longdiv(style = "width:100%;",
             div(
-                
+
               )
-              
+
             ),
     
     
@@ -367,6 +373,32 @@ ui <- fluidPage(
             )
     ),
     
+    longdiv(style = "width:100%;",
+            div(
+                id = "m5",
+                fluidRow(
+                  column(1),
+                  column(4, uiOutput("5"))
+
+                )
+
+
+            )
+    )#,
+
+    # longdiv(style = "width:100%;",
+    #         div(
+    #           id="m6",
+    #           fluidRow(
+    #             column(1),
+    #             column(4, uiOutput("6"))
+    # 
+    #           )
+    # 
+    # 
+    #         )
+    # )
+    
     # longdiv(
     #   div(
     #     id = "m5",
@@ -407,26 +439,18 @@ ui <- fluidPage(
     #   )
     # ),
     
-    longdiv(
-      id = "m10",
-      class = "light",
-      style = "text-align:center;",
-      h1("Thank you for reading.", class = "title"),
-      h1(
-        class = "subtitle",
-        tags$a(
-          "Explore the git repo.",
-          target = "_blank",
-          class = "sg",
-          href = "https://github.com/willdebras/migration"
-        )
-      )
-    )
+
+    
+
   )
 )
 
 server <- function(input, output, session) {
 
+  top <- Waypoint$
+    new("top", offset = OFFSET, animate = TRUE, animation = ANIMATION)$
+    start()
+  
   w1 <- Waypoint$
     new("m1", offset = OFFSET, animate = TRUE, animation = ANIMATION)$
     start()
@@ -439,25 +463,61 @@ server <- function(input, output, session) {
   w4 <- Waypoint$
     new("m4", offset = OFFSET, animate = TRUE, animation = ANIMATION)$
     start()
+  
   w5 <- Waypoint$
     new("m5", offset = OFFSET, animate = TRUE, animation = ANIMATION)$
     start()
-  w6 <- Waypoint$
-    new("m6", offset = OFFSET, animate = TRUE, animation = ANIMATION)$
-    start()
-  w7 <- Waypoint$
-    new("m7", offset = OFFSET, animate = TRUE, animation = ANIMATION)$
-    start()
-  w8 <- Waypoint$
-    new("m8", offset = OFFSET, animate = TRUE, animation = ANIMATION)$
-    start()
-  w9 <- Waypoint$
-    new("m9", offset = OFFSET, animate = TRUE, animation = ANIMATION)$
-    start()
   
-  w10 <- Waypoint$
-    new("m10", offset = "80%", animate = TRUE, animation = ANIMATION)$
-    start()
+  # w6 <- Waypoint$
+  #   new("m6", offset = OFFSET, animate = TRUE, animation = ANIMATION)$
+  #   start()
+  # w7 <- Waypoint$
+  #   new("m7", offset = OFFSET, animate = TRUE, animation = ANIMATION)$
+  #   start()
+  # w8 <- Waypoint$
+  #   new("m8", offset = OFFSET, animate = TRUE, animation = ANIMATION)$
+  #   start()
+  # w9 <- Waypoint$
+  #   new("m9", offset = OFFSET, animate = TRUE, animation = ANIMATION)$
+  #   start()
+  
+  # w10 <- Waypoint$
+  #   new("m10", offset = OFFSET, animate = TRUE, animation = ANIMATION)$
+  #   start()
+  
+  output$`top` <- renderUI({
+    
+    div(
+      h1("Recent Migration Patterns in the U.S.", class = paste("title")),
+      br(),
+      br(),
+      h1(
+        class = "subtitle",
+        "Each ", tags$i(class = "fas fa-slash sg"), "represents a flow in migration from state to state and the width represents the level of flow."
+      ),
+      br(),
+      p(
+        style = "text-align:center;",
+        "Using data from the U.S. Census", 
+        tags$a(
+          class = "sg",
+          tags$i(class = "fas fa-external-link-alt"),
+          target = "_blank",
+          href = "https://www.census.gov/data/tables/time-series/demo/geographic-mobility/state-to-state-migration.html"
+        )
+      ),
+      br(),
+      br(),
+      br(),
+      p(
+        style = "text-align:center;",
+        tags$i(class = "fas fa-chevron-down fa-3x")
+      ),
+      br(),
+      br()
+    )
+    
+  })
 
   output$`1` <- renderUI({
     req(w1$get_triggered())
@@ -481,7 +541,49 @@ server <- function(input, output, session) {
       
       )
   })
+  
 
+
+  
+  observeEvent(w1$get_direction(), {
+    if(w1$get_direction() == "up") 
+      
+      output$`top` <- renderUI({
+        
+        div(class = "newtop",
+            br(),
+            br(),
+            h1("Recent Migration Patterns in the U.S.", class = paste("dark", "big")),
+            br(),
+            br(),
+            h3(
+              "Each ", tags$i(class = "fas fa-slash sg"), "represents a flow in migration from state to state and the width represents the level of flow."
+            ),
+            br(),
+            h3(
+              "Using data from the U.S. Census", 
+              tags$a(
+                class = "sg",
+                tags$i(class = "fas fa-external-link-alt"),
+                target = "_blank",
+                href = "https://www.census.gov/data/tables/time-series/demo/geographic-mobility/state-to-state-migration.html"
+              )
+            ),
+            br(),
+            br(),
+            br(),
+            p(
+              tags$i(class = "fas fa-chevron-down fa-3x")
+            ),
+            br(),
+            br()
+        )
+        
+      })
+    
+  })
+  
+  
   output$`2` <- renderUI({
     req(w2$get_triggered())
     if(w2$get_triggered() == TRUE) 
@@ -510,7 +612,6 @@ server <- function(input, output, session) {
           class = "dark"
         ),
         br(),
-        br(),
         h3(HTML("The largest flow in migration happened in Florida in 2018. Nearly <span>600,000</span> people moved to Florida. 
         About <span>1 in 10</span> of those immigres came from New York, twice as many as any other state. 
                 "
@@ -526,9 +627,9 @@ server <- function(input, output, session) {
   
   output$`4` <- renderUI({
     req(w4$get_triggered())
-    if(w4$get_triggered() == TRUE) 
-      
-      
+    if(w4$get_triggered() == TRUE)
+
+
       tagList(
         h1("From Empire to Garden", class = paste("dark", "big")),
         h4(
@@ -536,76 +637,78 @@ server <- function(input, output, session) {
           class = "dark"
         ),
         br(),
-        br(),
-        h3(HTML("New York was th state with the largest differential in migration in 2018. While about 250,000 Americans moved to New York in 2018, 
-        over 450,000 New York residents left to pursue opportunities in other states, giving New York a loss of greater than <span>200,000</span> residents.
+        h3(HTML("New York was th state with the largest differential in migration in 2018 with over 450,000 New York residents leaving to pursue opportunities in other states. Since 2010, <span>1.4 million</span> people have <span>emigrated</span> away from the state.
                 "
         )),
-        h3(HTML("Since 2010, <span>1.4 million</span> people have <span>emigrated</span> away from the state, 
-                leaving the Seat of the Empire's population frozen, compared to states like California who grew 7% in the same period."
-        )),
-        
-        h3(HTML("The largest move this year was to New Jersey, where transplants can benefit from average real estate prices per squarefoot that are, on average, 1/10th that of home."
+
+        h3(HTML("The largest move this year was to New Jersey, where transplants benefit from average real estate prices per sqft. that are, on average, 1/10th that of home."
         ))
-        
-        
-        
-        
-        
+
+
+
+
+
       )
-      
+
   })
+  
+
   
   output$`5` <- renderUI({
     req(w5$get_triggered())
-    if(w5$get_triggered() == TRUE) render_month(5)
+    if(w5$get_triggered() == TRUE)
+
+
+      tagList(
+        br(),
+        br(),
+        br(),
+        h3("Thank you for reading.", class = "light"),
+        h3(
+          tags$a(
+            "Explore the git repo.",
+            class = "sg",
+            href = "https://github.com/willdebras/migration"
+          )
+        )
+      )
+
   })
   
-  output$`6` <- renderUI({
-    req(w6$get_triggered())
-    if(w6$get_triggered() == TRUE) render_month(6)
-  })
-  
-  output$`7` <- renderUI({
-    req(w7$get_triggered())
-    if(w7$get_triggered() == TRUE) render_month(7)
-  })
-  
-  output$`8` <- renderUI({
-    req(w8$get_triggered())
-    if(w8$get_triggered() == TRUE) render_month(8)
-  })
-  
-  output$`9` <- renderUI({
-    req(w9$get_triggered())
-    if(w9$get_triggered() == TRUE) render_month(9)
-  })
+  # output$`5` <- renderUI({
+  #   req(w5$get_triggered())
+  #   if(w5$get_triggered() == TRUE) render_month(5)
+  # })
+  # 
+  # output$`6` <- renderUI({
+  #   req(w6$get_triggered())
+  #   if(w6$get_triggered() == TRUE) render_month(6)
+  # })
+  # 
+  # output$`7` <- renderUI({
+  #   req(w7$get_triggered())
+  #   if(w7$get_triggered() == TRUE) render_month(7)
+  # })
+  # 
+  # output$`8` <- renderUI({
+  #   req(w8$get_triggered())
+  #   if(w8$get_triggered() == TRUE) render_month(8)
+  # })
+  # 
+  # output$`9` <- renderUI({
+  #   req(w9$get_triggered())
+  #   if(w9$get_triggered() == TRUE) render_month(9)
+  # })
+
+
 
   # Our sticky plot
   shtick <- Shtick$
     new("#stick")$
     shtick()
 
-  # output$graph <- renderSigmajs({
-  #   sigmajs() %>% 
-  #     sg_settings(
-  #       edgeColor = "default",
-  #       defaultEdgeColor = "#c3c3c3",
-  #       font = "Raleway",
-  #       fontStyle = "sans-serif",
-  #       mouseWheelEnabled = FALSE,
-  #       labelSize = "proportional",
-  #       labelThreshold = 9999
-  #     )
-  # })
-  
-  # output$leaf <- renderLeaflet({
-  # 
-  #   leaflet("leaf")
-  #   
-  # })
 
-  
+
   
   observeEvent(w1$get_direction(), {
     if(w1$get_direction() == "down") 
@@ -616,23 +719,31 @@ server <- function(input, output, session) {
                                                  scrollWheelZoom = FALSE)) %>%
           fitBounds(-125, 16, -75, 49) %>%
           setMaxBounds(-125, 16, -75, 49)
-          
+        
         
       })
-
+    
     leafletProxy("leaf") %>%
       addProviderTiles(providers$Esri.WorldGrayCanvas) %>%
-       addProviderTiles(providers$Stamen.TonerLines,
-                        options = providerTileOptions(opacity = 0.35)) %>%
+      addProviderTiles(providers$Stamen.TonerLines,
+                       options = providerTileOptions(opacity = 0.35)) %>%
       addPolylines(data = flows_bot, weight = ~weight,
                    fillOpacity = .2,
                    group = ~origins, color = "#d3d3d3")
-      # addLayersControl(overlayGroups = unique(flows$destinations),
-      #                  #baseGroups = c("origin", "destination"),
-      #                  options = layersControlOptions(collapsed = FALSE)) %>%
-      #fitBounds(-126, 24, -66, 50) %>%
-      #addControl(title, position = "topleft", className="map-title")
 
+    
+  })
+  
+  observeEvent(w2$get_direction(), {
+    if(w2$get_direction() == "up") 
+      
+    
+    leafletProxy("leaf") %>%
+      clearShapes() %>%
+      addPolylines(data = flows_bot, weight = ~weight,
+                   fillOpacity = .2,
+                   group = ~origins, color = "#d3d3d3")
+    
   })
 
   observeEvent(w2$get_direction(), {
@@ -652,6 +763,24 @@ server <- function(input, output, session) {
 
       
   })
+  
+  observeEvent(w3$get_direction(), {
+    if(w3$get_direction() == "up")
+      
+      leafletProxy("leaf") %>%
+      addPolylines(data = flows_top, label = hover_top,
+                   labelOptions = labelOptions(
+                     style = list("font-weight" = "normal", padding = "3px 8px"),
+                     textsize = "15px",
+                     direction = "auto"),
+                   weight = ~weight,
+                   opacity = .6,
+                   group = ~origins,
+                   color = "#1167b1",
+                   highlight = highlightOptions(opacity = 0.8, color = "red", bringToFront = TRUE))
+    
+    
+  })
 
   observeEvent(w3$get_direction(), {
     if(w3$get_direction() == "down")
@@ -669,6 +798,24 @@ server <- function(input, output, session) {
                  highlight = highlightOptions(opacity = 0.8, color = "red", bringToFront = TRUE))
       
       
+  })
+  
+  observeEvent(w4$get_direction(), {
+    if(w4$get_direction() == "up")
+      
+      leafletProxy("leaf") %>%
+      clearShapes() %>%
+      addPolylines(data = dplyr::filter(flows, destinations %in% "Florida"), label = hover_fl,
+                   labelOptions = labelOptions(
+                     style = list("font-weight" = "normal", padding = "3px 8px"),
+                     textsize = "15px",
+                     direction = "auto"),
+                   weight = ~weight,
+                   opacity = .6,
+                   group = ~origins, color = "#1167b1",
+                   highlight = highlightOptions(opacity = 0.8, color = "red", bringToFront = TRUE))
+    
+    
   })
 
   observeEvent(w4$get_direction(), {
@@ -688,34 +835,44 @@ server <- function(input, output, session) {
                    highlight = highlightOptions(opacity = 0.8, color = "red", bringToFront = TRUE))
       
   })
-
+  
   observeEvent(w5$get_direction(), {
-    if(w5$get_direction() == "down") add_data(5)
-  })
-
-  observeEvent(w6$get_direction(), {
-    if(w6$get_direction() == "down") add_data(6)
-  })
-
-  observeEvent(w7$get_direction(), {
-    if(w7$get_direction() == "down") add_data(7)
-  })
-
-  observeEvent(w8$get_direction(), {
-    if(w8$get_direction() == "down") add_data(8)
-  })
-
-  observeEvent(w9$get_direction(), {
-    if(w9$get_direction() == "down") add_data(9)
-    Sys.sleep(2)
-    sigmajsProxy("graph") %>% 
-      sg_force_stop_p()
+    if(w5$get_direction() == "up") 
+      
+      
+      leafletProxy("leaf") %>%
+      clearShapes() %>%
+      addPolylines(data = dplyr::filter(flows, origins %in% "New York"), label = hover_ny,
+                   labelOptions = labelOptions(
+                     style = list("font-weight" = "normal", padding = "3px 8px"),
+                     textsize = "15px",
+                     direction = "auto"),
+                   weight = ~weight,
+                   opacity = .6,
+                   group = ~origins, color = "#1167b1",
+                   highlight = highlightOptions(opacity = 0.8, color = "red", bringToFront = TRUE))
+    
   })
   
-  observeEvent(w10$get_direction(), {
-    if(w10$get_direction() == "down") shtick$unshtick()
-  })
   
+
+  # observeEvent(w5$get_direction(), {
+  #   if(w5$get_direction() == "down") add_data(5)
+  # })
+  # 
+  # observeEvent(w6$get_direction(), {
+  #   if(w6$get_direction() == "down") add_data(6)
+  # })
+  # 
+  # observeEvent(w7$get_direction(), {
+  #   if(w7$get_direction() == "down") add_data(7)
+  # })
+  # 
+  # observeEvent(w8$get_direction(), {
+  #   if(w8$get_direction() == "down") add_data(8)
+  # })
+
+
 }
 
 shinyApp(ui, server)
