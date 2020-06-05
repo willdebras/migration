@@ -11,12 +11,16 @@ downloaded here:
 
 <https://www.census.gov/data/tables/time-series/demo/geographic-mobility/state-to-state-migration.html>
 
+The repo contains a cleaned version of the dataset, as well as an `.rda`
+file with latitudes and longtitudes for centers of states for the
+mapping.
+
 # Maps
 
 The repo contains a base script with a few various leaflet maps created
 in the reporting, e.g.:
 
-![](README_files/figure-gfm/map-1.png)<!-- -->
+![img](README_files/map_base.png)
 
 # Scrolly telling
 
