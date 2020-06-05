@@ -83,7 +83,7 @@ library(dplyr)
 
 
 migration <- openxlsx::read.xlsx("./data/migration_flow_clean.xlsx")
-#migration <- openxlsx::read.xlsx("C:\\Users\\Bonnell-William\\Documents\\migration\\scrolly\\data\\migration_flow_clean.xlsx")
+# migration <- openxlsx::read.xlsx("scrolly/data/migration_flow_clean.xlsx")
 
 mig2 <- migration[,-c(2:9)]
 mig3 <- mig2[,c(FALSE, TRUE)]
@@ -131,7 +131,7 @@ library(RColorBrewer)
 # save(states_xy, file = "C:\\Users\\Bonnell-William\\Documents\\migration\\scrolly\\data\\states_xy.rda")
 
 # states_xy <- load(file = "./data/states_latlona.rda")
-# load(file = "C:\\Users\\Bonnell-William\\Documents\\migration\\scrolly\\data\\states_xy.rda")
+# load(file = "scrolly/data/states_xy.rda")
 
 load(file = "./data/states_xy.rda")
 
@@ -276,6 +276,7 @@ ui <- fluidPage(
         column(7, leafletOutput("leaf", width = "100%", height = "100vh"))
       )
     ),
+
     longdiv(
       h1("Recent Migration Patterns in the U.S.", class = "title"),
       br(),
@@ -306,6 +307,15 @@ ui <- fluidPage(
       br()
 
     ),
+    
+    longdiv(style = "width:100%;",
+            div(
+                
+              )
+              
+            ),
+    
+    
     longdiv(style = "width:100%;",
       div(
         id = "m1",
@@ -357,58 +367,58 @@ ui <- fluidPage(
             )
     ),
     
-    longdiv(
-      div(
-        id = "m5",
-        uiOutput("5"),
-        uiOutput("aug")
-      )
-    ),
-    
-    longdiv(
-      div(
-        id = "m6",
-        uiOutput("6"),
-        uiOutput("sep")
-      )
-    ),
-    
-    longdiv(
-      div(
-        id = "m7",
-        uiOutput("7"),
-        uiOutput("oct")
-      )
-    ),
-    
-    longdiv(
-      div(
-        id = "m8",
-        uiOutput("8"),
-        uiOutput("nov")
-      )
-    ),
-    
-    longdiv(
-      div(
-        id = "m9",
-        uiOutput("9"),
-        uiOutput("dec")
-      )
-    ),
+    # longdiv(
+    #   div(
+    #     id = "m5",
+    #     uiOutput("5"),
+    #     uiOutput("aug")
+    #   )
+    # ),
+    # 
+    # longdiv(
+    #   div(
+    #     id = "m6",
+    #     uiOutput("6"),
+    #     uiOutput("sep")
+    #   )
+    # ),
+    # 
+    # longdiv(
+    #   div(
+    #     id = "m7",
+    #     uiOutput("7"),
+    #     uiOutput("oct")
+    #   )
+    # ),
+    # 
+    # longdiv(
+    #   div(
+    #     id = "m8",
+    #     uiOutput("8"),
+    #     uiOutput("nov")
+    #   )
+    # ),
+    # 
+    # longdiv(
+    #   div(
+    #     id = "m9",
+    #     uiOutput("9"),
+    #     uiOutput("dec")
+    #   )
+    # ),
     
     longdiv(
       id = "m10",
       class = "light",
       style = "text-align:center;",
-      h1("Thank you", class = "title"),
+      h1("Thank you for reading.", class = "title"),
       h1(
         class = "subtitle",
         tags$a(
-          "Read the blog post",
+          "Explore the git repo.",
           target = "_blank",
           class = "sg",
-          href = "https://john-coene.com/post/scrollytell/"
+          href = "https://github.com/willdebras/migration"
         )
       )
     )
@@ -616,9 +626,7 @@ server <- function(input, output, session) {
                         options = providerTileOptions(opacity = 0.35)) %>%
       addPolylines(data = flows_bot, weight = ~weight,
                    fillOpacity = .2,
-                   group = ~origins, color = "#d3d3d3") %>%
-      fitBounds(-125, 16, -75, 49) %>%
-      setMaxBounds(-125, 16, -75, 49)
+                   group = ~origins, color = "#d3d3d3")
       # addLayersControl(overlayGroups = unique(flows$destinations),
       #                  #baseGroups = c("origin", "destination"),
       #                  options = layersControlOptions(collapsed = FALSE)) %>%
