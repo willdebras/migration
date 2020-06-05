@@ -6,6 +6,7 @@ library(waypointer)
 library(graphTweets)
 library(spdplyr)
 library(sp)
+library(leaflet.extras)
 
 # source("./data/network.R")
 # source("functions.R")
@@ -130,9 +131,9 @@ library(RColorBrewer)
 # save(states_xy, file = "C:\\Users\\Bonnell-William\\Documents\\migration\\scrolly\\data\\states_xy.rda")
 
 # states_xy <- load(file = "./data/states_latlona.rda")
-# load(file = "C:\\Users\\Bonnell-William\\Documents\\migration\\scrolly\\data\\states_latlona.rda")
+# load(file = "C:\\Users\\Bonnell-William\\Documents\\migration\\scrolly\\data\\states_xy.rda")
 
-load(file = ".\\data\\states_xy.rda")
+load(file = "./data/states_xy.rda")
 
 
 library(rgdal)
@@ -309,8 +310,8 @@ ui <- fluidPage(
       div(
         id = "m1",
         fluidRow(
-          column(2),
-          column(3, uiOutput("1"))
+          column(1),
+          column(4, uiOutput("1"))
           
         )
         
@@ -321,8 +322,8 @@ ui <- fluidPage(
             div(
               id = "m2",
               fluidRow(
-                column(2),
-                column(3, uiOutput("2"))
+                column(1),
+                column(4, uiOutput("2"))
                 
               )
               
@@ -334,8 +335,8 @@ ui <- fluidPage(
             div(
               id = "m3",
               fluidRow(
-                column(2),
-                column(3, uiOutput("3"))
+                column(1),
+                column(4, uiOutput("3"))
                 
               )
               
@@ -347,8 +348,8 @@ ui <- fluidPage(
             div(
               id = "m4",
               fluidRow(
-                column(2),
-                column(3, uiOutput("4"))
+                column(1),
+                column(4, uiOutput("4"))
                 
               )
               
@@ -594,13 +595,17 @@ server <- function(input, output, session) {
   #   
   # })
 
+  
+  
   observeEvent(w1$get_direction(), {
     if(w1$get_direction() == "down") 
       
       output$leaf <- renderLeaflet({
         
-        leaflet("leaf", options = leafletOptions(zoomControl = FALSE, maxZoom = 5, minZoom = 5)) %>%
-          setView(-98.5795, 39.8283, zoom = 5)
+        leaflet("leaf", options = leafletOptions(zoomControl = FALSE,
+                                                 scrollWheelZoom = FALSE)) %>%
+          fitBounds(-125, 16, -75, 49) %>%
+          setMaxBounds(-125, 16, -75, 49)
           
         
       })
@@ -612,10 +617,12 @@ server <- function(input, output, session) {
       addPolylines(data = flows_bot, weight = ~weight,
                    fillOpacity = .2,
                    group = ~origins, color = "#d3d3d3") %>%
+      fitBounds(-125, 16, -75, 49) %>%
+      setMaxBounds(-125, 16, -75, 49)
       # addLayersControl(overlayGroups = unique(flows$destinations),
       #                  #baseGroups = c("origin", "destination"),
       #                  options = layersControlOptions(collapsed = FALSE)) %>%
-      setView(-98.5795, 39.8283, zoom = 5)# %>%
+      #fitBounds(-126, 24, -66, 50) %>%
       #addControl(title, position = "topleft", className="map-title")
 
   })
