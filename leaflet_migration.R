@@ -68,13 +68,29 @@ mig_clean <- mig_lat %>%
                 !count==0)
 
 mig_weight <- mig_clean %>%
-  mutate(weight = scales::rescale(as.numeric(count), to = c(0.02, 10)))
+  mutate(weight = scales::rescale(as.numeric(count), to = c(0.02, 10)),
+         count = as.numeric(count),
+         origins = as.factor(origins),
+         destinations = as.factor(destinations))
+
+mig_ori <- mig_weight %>%
+  group_by(origins) %>%
+  summarise(state_ori = sum(count))
+
+mig_dest <- mig_weight %>%
+  group_by(destinations) %>%
+  summarise(state_dest = sum(count))
+
+mig_diff <- left_join(mig_dest, mig_ori, by=c("destinations" = "origins")) %>%
+  mutate(diff = abs(state_ori - state_dest))
 
 mig_weight_top <- mig_weight %>%
   dplyr::filter(weight > 2.19)
 
 mig_weight_bot <- mig_weight %>%
   dplyr::filter(weight <= 2.19)
+
+
 
 # countries$longitude <- coordinates(countries)[,1]
 # 
