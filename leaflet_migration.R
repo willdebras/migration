@@ -1,16 +1,9 @@
-# library(dplyr)
-# 
-# set.seed(1983)
-# 
-# df <- data_frame(origins = sample(c('Florida', 'Mississippi', 'Washington', 'California'), 
-#                                   size = 100, replace = TRUE), 
-#                  destinations = sample(c('Texas', 'New Jersey', 'Colorado', 'Minnesota'), 
-#                                        size = 100, replace = TRUE))
+
 
 library(openxlsx)
 library(dplyr)
 
-migration <- openxlsx::read.xlsx("H:\\New fldr\\migration_flow_clean.xlsx")
+migration <- openxlsx::read.xlsx("scrolly/data/migration_flow_clean.xlsx")
 
 mig2 <- migration[,-c(2:9)]
 mig3 <- mig2[,c(FALSE, TRUE)]
@@ -34,26 +27,20 @@ mig_states <- mig_un %>%
   dplyr::select(origins, destinations, count)
 
 
-# head(df)
-# 
-# df2 <- df %>%
-#   group_by(origins, destinations) %>%
-#   summarize(counts = n()) %>%
-#   ungroup() %>%
-#   arrange(desc(counts))
-
 library(leaflet)
 library(RColorBrewer)
 
-library(rnaturalearth) # devtools::install_github('ropenscilabs/rnaturalearth')
+#library(rnaturalearth) # devtools::install_github('ropenscilabs/rnaturalearth')
 
 # countries <- ne_countries()
 
-states <- ne_states(iso_a2 = 'US')
+#states <- ne_states(iso_a2 = 'US')
 
-states_xy <- states@data %>%
-  select(name, longitude, latitude)
+# states_xy <- states@data %>%
+#   select(name, longitude, latitude)
 
+
+load(file = "scrolly/data/states_xy.rda")
 
 library(rgdal)
 
@@ -92,34 +79,10 @@ mig_weight_bot <- mig_weight %>%
 
 
 
-# countries$longitude <- coordinates(countries)[,1]
-# 
-# countries$latitude <- coordinates(countries)[,2]
-# 
-# countries_xy <- countries@data %>%
-#   select(admin, longitude, latitude)
-# 
-
-
-
-# df3 <- df2 %>%
-#   left_join(states_xy, by = c('origins' = 'name')) %>%
-#   left_join(states_xy, by = c('destinations' = 'name'))
-# 
-# df3$longitude.y <- as.numeric(as.character(df3$longitude.y))
-# 
-# df3$latitude.y <- as.numeric(as.character(df3$latitude.y))
-# 
-# head(df3)
-
-
 library(geosphere)
 
 flows <- gcIntermediate(mig_weight[,4:5], mig_weight[,6:7], sp = TRUE, addStartEnd = TRUE)
 
-# flows2 <- gcIntermediate(df3[,4:5], df3[,6:7], sp = TRUE, addStartEnd = TRUE)
-# flows2counts <- df3$counts
-# flows2origins <- df3$origins
 
 
 flows$counts <- mig_weight$count
@@ -192,11 +155,7 @@ leaflet() %>%
                opacity = .6,
                group = ~origins, color = "#1167b1",
                highlight = highlightOptions(opacity = 0.8, color = "red", bringToFront = TRUE)) %>%
-  # addLayersControl(overlayGroups = unique(flows$destinations),
-  #                  #baseGroups = c("origin", "destination"),
-  #                  options = layersControlOptions(collapsed = FALSE)) %>%
   setView(-98.5795, 39.8283, zoom = 3.5) %>%
-  addControl(title, position = "topleft", className="map-title")# %>%
-  #addCircles(data = mig_weight_top, lng = ~longitude.x, lat = ~latitude.x, color = "#1167b1", weight = 12)
+  addControl(title, position = "topleft", className="map-title")
   
   
