@@ -546,7 +546,7 @@ server <- function(input, output, session) {
 
   
   observeEvent(w1$get_direction(), {
-    if(w1$get_direction() == "up") 
+    if(w1$get_direction() == "down") 
       
       output$`top` <- renderUI({
         
