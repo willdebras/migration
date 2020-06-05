@@ -530,14 +530,14 @@ server <- function(input, output, session) {
         class = "dark"
       ),
       br(),
-      br(),
-      br(),
       h3(HTML("In 2018, nearly <span>4,000,000</span> migrated from one state to another for various push and pull factors. Most people migrate for economic reasons, 
               often seeking new opportunities for themselves or their family."
-              )
-        
-        
-        )
+              ), class = "dark"
+        ),
+      br(),
+      h4(HTML("Scroll on the left side to continue reading. Scroll on the right side to view the map more closely."
+      )
+      )
       
       )
   })
@@ -595,7 +595,7 @@ server <- function(input, output, session) {
           class = "dark"
         ),
         br(),
-        h4(class = "dark",
+        h4(
            "Try hovering your cursor over the map to see some of the top 50 diadic moves in the U.S. in 2018.")
       )
       
