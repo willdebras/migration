@@ -69,3 +69,9 @@ span {
   text-align:left;
   
 }
+
+.leaflet-control-layers-expanded  {
+  color: #3a3a3a;
+  font-family: 'Raleway', sans-serif;
+  font-size:4;
+}

@@ -224,6 +224,11 @@ hover_bot <- paste0(flows_bot$origins, " to ",
 hover_fl <- subset(hover, stringr::str_detect(hover, "to Florida"))
 hover_ny <- subset(hover, stringr::str_detect(hover, "New York to"))
 
+south_st <- c("to Florida", "to Georgia", " to Louisiana", "to Mississippi", "to North Carolina", "to South Carolina", "to Texas", "to Virginia", "to Alabama")
+
+
+hover_south <- subset(hover, stringr::str_detect(hover, paste(south_st, collapse = "|")))
+
 pal <- colorFactor(brewer.pal(4, 'Set2'), flows$origins)
 
 
@@ -384,7 +389,20 @@ ui <- fluidPage(
 
 
             )
-    )#,
+    ),
+    
+    longdiv(style = "width:100%;",
+            div(
+              id = "m6",
+              fluidRow(
+                column(1),
+                column(4, uiOutput("6"))
+                
+              )
+              
+              
+            )
+    )
 
     # longdiv(style = "width:100%;",
     #         div(
@@ -468,9 +486,9 @@ server <- function(input, output, session) {
     new("m5", offset = OFFSET, animate = TRUE, animation = ANIMATION)$
     start()
   
-  # w6 <- Waypoint$
-  #   new("m6", offset = OFFSET, animate = TRUE, animation = ANIMATION)$
-  #   start()
+  w6 <- Waypoint$
+    new("m6", offset = OFFSET, animate = TRUE, animation = ANIMATION)$
+    start()
   # w7 <- Waypoint$
   #   new("m7", offset = OFFSET, animate = TRUE, animation = ANIMATION)$
   #   start()
@@ -652,11 +670,37 @@ server <- function(input, output, session) {
 
   })
   
-
-  
   output$`5` <- renderUI({
     req(w5$get_triggered())
-    if(w5$get_triggered() == TRUE)
+    if(w5$get_triggered() == TRUE) 
+      
+      tagList(
+        h1("Southern Nights", class = paste("dark", "big")),
+        h4(
+          HTML("<i>\"Have you ever felt them southern nights?</i>"),
+          class = "dark"
+        ),
+        br(),
+        h3(HTML("The largest regional trend in migration was inmigration to the South. States like Georgia saw a lot of migration from other Southern states, while states like Virginia and North Carolina had a majority of their inmigration coming from outside the region, even across the country.
+                ", class = "dark"
+        )),
+        br(),
+        
+        h4(HTML("Click on the icon in the top right to show or hide states."
+        ))
+        
+        
+        
+        
+        
+      )
+      
+  })
+
+  
+  output$`6` <- renderUI({
+    req(w6$get_triggered())
+    if(w6$get_triggered() == TRUE)
 
 
       tagList(
@@ -675,10 +719,7 @@ server <- function(input, output, session) {
 
   })
   
-  # output$`5` <- renderUI({
-  #   req(w5$get_triggered())
-  #   if(w5$get_triggered() == TRUE) render_month(5)
-  # })
+
   # 
   # output$`6` <- renderUI({
   #   req(w6$get_triggered())
@@ -842,6 +883,7 @@ server <- function(input, output, session) {
       
       leafletProxy("leaf") %>%
       clearShapes() %>%
+      removeLayersControl() %>%
       addPolylines(data = dplyr::filter(flows, origins %in% "New York"), label = hover_ny,
                    labelOptions = labelOptions(
                      style = list("font-weight" = "normal", padding = "3px 8px"),
@@ -854,7 +896,45 @@ server <- function(input, output, session) {
     
   })
   
+  observeEvent(w5$get_direction(), {
+    if(w5$get_direction() == "down") 
+      
+      leafletProxy("leaf") %>%
+      clearShapes() %>%
+      addPolylines(data = dplyr::filter(flows, destinations %in% c("Florida", "Georgia", "Louisiana", "Mississippi", "North Carolina", "South Carolina", "Texas", "Virginia", "Alabama")),
+                   label = hover_south,
+                   labelOptions = labelOptions(
+                     style = list("font-weight" = "normal", padding = "3px 8px"),
+                     textsize = "15px",
+                     direction = "auto"),
+                   weight = ~weight,
+                   opacity = .6,
+                   group = ~destinations, color = "#1167b1",
+                   highlight = highlightOptions(opacity = 0.8, color = "red", bringToFront = TRUE)) %>%
+      addLayersControl(overlayGroups = c("Florida", "Georgia", "Louisiana", "Mississippi", "North Carolina", "South Carolina", "Texas", "Virginia", "Alabama"),
+                       options = layersControlOptions(style = list("font-weight" = "normal", padding = "3px 8px"),
+                       textsize = "12px")) %>%
+      hideGroup(c("Florida", "Mississippi", "Louisiana", "South Carolina", "Alabama", "Virginia"))
+    
+  })
   
+  # observeEvent(w6$get_direction(), {
+  #   if(w6$get_direction() == "up") 
+  #     
+  #     
+  #     leafletProxy("leaf") %>%
+  #     clearShapes() %>%
+  #     addPolylines(data = dplyr::filter(flows, destinations %in% c("Florida", "Georgia", "Louisiana", "Mississippi", "North Carolina", "South Carolina", "Texas", "Virginia", "Alabama")), label = hover_ny,
+  #                  labelOptions = labelOptions(
+  #                    style = list("font-weight" = "normal", padding = "3px 8px"),
+  #                    textsize = "15px",
+  #                    direction = "auto"),
+  #                  weight = ~weight,
+  #                  opacity = .6,
+  #                  group = ~origins, color = "#1167b1",
+  #                  highlight = highlightOptions(opacity = 0.8, color = "red", bringToFront = TRUE))
+  #   
+  # })
 
   # observeEvent(w5$get_direction(), {
   #   if(w5$get_direction() == "down") add_data(5)
