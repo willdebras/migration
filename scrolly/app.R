@@ -758,8 +758,8 @@ server <- function(input, output, session) {
         
         leaflet("leaf", options = leafletOptions(zoomControl = FALSE,
                                                  scrollWheelZoom = FALSE)) %>%
-          fitBounds(-125, 16, -75, 49) %>%
-          setMaxBounds(-125, 16, -75, 49)
+          fitBounds(-125, 16, -75, 55) %>%
+          setMaxBounds(-125, 16, -75, 55)
         
         
       })
