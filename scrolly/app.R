@@ -677,13 +677,13 @@ server <- function(input, output, session) {
       tagList(
         h1("Southern Nights", class = paste("dark", "big")),
         h4(
-          HTML("<i>\"Have you ever felt them southern nights?</i>"),
+          HTML("<i>\"Have you ever felt them southern nights?\"</i>"),
           class = "dark"
         ),
         br(),
         h3(HTML("The largest regional trend in migration was inmigration to the South. States like Georgia saw a lot of migration from other Southern states, while states like Virginia and North Carolina had a majority of their inmigration coming from outside the region, even across the country.
-                ", class = "dark"
-        )),
+                "
+        ), class = "dark"),
         br(),
         
         h4(HTML("Click on the icon in the top right to show or hide states."
